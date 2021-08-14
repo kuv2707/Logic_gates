@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=not
+comment1.params=p
+comment1.target=not(java.awt.Point)
+comment2.params=
+comment2.target=outputPin\ getOutputPin()
+comment3.params=etate\ pin
+comment3.target=void\ setState(boolean,\ int)
+comment4.params=
+comment4.target=void\ run()
+comment5.params=
+comment5.target=boolean\ minterm()
+comment6.params=
+comment6.target=java.lang.String\ getShowName()
+numComments=7

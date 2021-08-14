@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=outputPin
+comment1.params=parent\ no\ locatio
+comment1.target=outputPin(gates,\ int,\ java.awt.Point)
+comment2.params=b
+comment2.target=void\ setState(boolean)
+comment3.params=g
+comment3.target=void\ remove(gates)
+comment4.params=g
+comment4.target=void\ addChild(inputPin)
+numComments=5
