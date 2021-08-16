@@ -1,18 +1,18 @@
-import java.util.*;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+
 class not extends gates
 {
-    public not(Point p)//not can only have 1 inputpin
+    public not(Point p, JFrame frame, gui ooo)//not can only have 1 inputpin
     {
-        super(p);
+        super(p,frame,ooo);
         estado=true;
-        face.setSize(80,60);
-        
+        //this.setSize(80,50);
+        this.setSize(200,200);
         inputPin p1=new inputPin(this,1,new Point(5,25));
          p3=new outputPin(this,1,new Point(60,25));
-        face.add(p1);
-        face.add(p3);
+        this.add(p1);
+        this.add(p3);
         pins.add(p1);
         pins.add(p3);
         
@@ -26,10 +26,10 @@ class not extends gates
         
         estado=!etate;
         
-        gui.pan.repaint();
+        holdingPanel.repaint();
         try
         {
-            Thread.sleep(15);
+            Thread.sleep(60);
         }
         catch (InterruptedException ie)
         {
@@ -47,9 +47,22 @@ class not extends gates
                 }).start();
         }
                 
-        gui.pan.repaint();
+        holdingPanel.repaint();
     }
-    
+    public void stimulate()
+    {
+        for(Pin p:child)
+        {
+            
+                new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        p.setState(estado);
+                    }
+                }).start();
+        }
+    }
     @Deprecated
     public boolean minterm()
     {

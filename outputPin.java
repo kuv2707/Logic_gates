@@ -4,7 +4,7 @@ public class outputPin extends Pin
     public outputPin(gates parent,int no,Point locatio)
     {
         super(parent,no,locatio);
-        setForeground(Color.magenta);
+        this.setForeground(Color.magenta);
     }
     @Override
     public void setState(boolean b)

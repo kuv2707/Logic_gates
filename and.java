@@ -7,25 +7,25 @@ class and extends gates
     
     boolean[] state;
     final int ipins=2;
-    public and(Point lox)
+    public and(Point lox,JFrame frame,gui pan)
     {
-        super(lox);
+        super(lox,frame,pan);
         
         state=new boolean[ipins];
         for(int i=0;i<ipins;i++)
         {
             state[i]=false;
         }
-        face.setSize(200,200);
-        face.setOpaque(true);
-        //face.setText("AND");
+        this.setSize(200,200);
+        this.setOpaque(true);
+        //this.setText("AND");
         
         inputPin p1=new inputPin(this,1,new Point(5,25));
         inputPin p2=new inputPin(this,2,new Point(5,180));
         p3=new outputPin(this,1,new Point(180,90));
-        face.add(p1);
-        face.add(p2);
-        face.add(p3);
+        this.add(p1);
+        this.add(p2);
+        this.add(p3);
         pins.add(p1);
         pins.add(p2);
         pins.add(p3);
@@ -38,11 +38,11 @@ class and extends gates
     {
         state[pin-1]=etate;
         estado=minterm();
-        gui.pan.repaint();
+        holdingPanel.repaint();
         //System.out.println("       state of and gate "+estado+"   what was received: "+etate);
         try
         {
-            Thread.sleep(15);
+            Thread.sleep(60);
         }
         catch (InterruptedException ie)
         {
@@ -59,7 +59,21 @@ class and extends gates
                     }
                 }).start();
         }
-        gui.pan.repaint();
+        holdingPanel.repaint();
+    }
+    public void stimulate()
+    {
+        for(Pin p:child)
+        {
+            
+                new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        p.setState(estado);
+                    }
+                }).start();
+        }
     }
     public boolean minterm()
     {

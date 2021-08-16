@@ -19,30 +19,35 @@ abstract class Pin extends JButton implements Serializable
     public Pin(gates holder,int no,Point locatio)
     {
         this.holder=holder;
-        this.setSize(60,20);
+        this.setSize(20,20);
         this.no=no;
         this.locationOfWire=locatio;
         this.setLocation(locatio);
+        
+        addListeners();
+    }
+    public void addListeners()
+    {
         Pin este=this;
         addMouseListener(new MouseAdapter()
         {
             public void mouseClicked(MouseEvent me)
             {
                 
-                    if(gui.connector!=null)
+                    if(getHolder().holdingPanel.connector!=null)
                     {
                         if(este instanceof inputPin)
                         {
-                            gui.connector.addChild((inputPin)este);
-                            gui.pan.repaint();
-                            gui.connector=null;
+                            getHolder().holdingPanel.connector.addChild((inputPin)este);
+                            getHolder().holdingFrame.repaint();
+                            getHolder().holdingPanel.connector=null;
                         }
                         
                     }
                     else
                     {
                         if(este instanceof outputPin)
-                        gui.connector=este;
+                        getHolder().holdingPanel.connector=este;
                     }
                 
             }
@@ -51,7 +56,7 @@ abstract class Pin extends JButton implements Serializable
     @Override
     public String toString()
     {
-        return "pin on "+holder;
+        return "pin on "+holder+"("+holder.getLocation().x+","+holder.getLocation().y;
     }
     abstract public void addChild(inputPin g);
     abstract public void setState(boolean b);

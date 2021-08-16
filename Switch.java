@@ -1,26 +1,20 @@
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 class Switch extends gates
 {
-    public Switch(Point p)
+    public Switch(Point p,JFrame frame,gui pan)
     {
-        super(p);
-        face.setLocation(p);
-        face.setSize(200,60);
+        super(p,frame,pan);
+        this.setLocation(p);
+        this.setSize(200,60);
         
          p3=new outputPin(this,1,new Point(180,25));
         pins.add(p3);
-        face.add(p3);
+        this.add(p3);
         pins.add(p3);
-        face.addMouseListener(new MouseAdapter()
-        {
-            public void mouseClicked(MouseEvent e)
-            {
-                setState(!estado,0);
-                //System.out.println(state);
-            }
-        });
+        
     }
     public outputPin getOutputPin()
     {
@@ -30,18 +24,8 @@ class Switch extends gates
     {
         return estado;
     }
-    public void setState(boolean b,int pin)
+    public void stimulate()
     {
-        estado=b;
-        gui.pan.repaint();
-        try
-        {
-            Thread.sleep(15);
-        }
-        catch (InterruptedException ie)
-        {
-            ie.printStackTrace();
-        }
         for(Pin p:child)
         {
             
@@ -53,7 +37,32 @@ class Switch extends gates
                     }
                 }).start();
         }
-        gui.pan.repaint();
+    }
+    public void setState(boolean b,int pin)
+    {
+        estado=b;
+        holdingPanel.repaint();
+        try
+        {
+            Thread.sleep(60);
+        }
+        catch (InterruptedException ie)
+        {
+            ie.printStackTrace();
+        }
+        //gates g=this;
+        for(Pin p:child)
+        {
+            
+                new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        p.setState(estado);
+                    }
+                }).start();
+        }
+        holdingPanel.repaint();
     }
     public String getShowName()
     {

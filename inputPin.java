@@ -10,7 +10,7 @@ class inputPin extends Pin
     {
         for(Pin p:getHolder().parent)
         {
-            b=b||p.getHolder().getState();
+            b=b||p.getHolder().estado;
         }
         getHolder().setState(b,no);
         this.setText(""+b);
