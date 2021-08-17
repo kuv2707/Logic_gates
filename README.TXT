@@ -17,3 +17,5 @@ if two components connected to input of a third, and one component changes state
 the third component doesnt see the state of the other component and rather changes its
 value based on that component which most recently changed its state
 (related to Pin class)
+
+removed gate's threads still run??

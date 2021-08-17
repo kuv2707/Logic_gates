@@ -56,7 +56,7 @@ abstract class Pin extends JButton implements Serializable
     @Override
     public String toString()
     {
-        return "pin on "+holder+"("+holder.getLocation().x+","+holder.getLocation().y;
+        return holder+" at ("+holder.getLocation().x+","+holder.getLocation().y+")";
     }
     abstract public void addChild(inputPin g);
     abstract public void setState(boolean b);

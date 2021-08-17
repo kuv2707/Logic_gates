@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
-
+import javax.imageio.ImageIO;
 class not extends gates
 {
     public not(Point p, JFrame frame, gui ooo)//not can only have 1 inputpin
     {
         super(p,frame,ooo);
         estado=true;
-        //this.setSize(80,50);
-        this.setSize(200,200);
+        chehra=Main.not;
+        this.setSize(80,50);
         inputPin p1=new inputPin(this,1,new Point(5,25));
          p3=new outputPin(this,1,new Point(60,25));
         this.add(p1);
@@ -47,7 +47,7 @@ class not extends gates
                 }).start();
         }
                 
-        holdingPanel.repaint();
+        holdingFrame.repaint();
     }
     public void stimulate()
     {

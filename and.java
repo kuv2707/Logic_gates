@@ -10,19 +10,22 @@ class and extends gates
     public and(Point lox,JFrame frame,gui pan)
     {
         super(lox,frame,pan);
+        chehra=Main.and;
+        chehraOffset.x=-70;
+        chehraOffset.y=-20;
         
         state=new boolean[ipins];
         for(int i=0;i<ipins;i++)
         {
             state[i]=false;
         }
-        this.setSize(200,200);
+        this.setSize(230,200);
         this.setOpaque(true);
         //this.setText("AND");
         
-        inputPin p1=new inputPin(this,1,new Point(5,25));
-        inputPin p2=new inputPin(this,2,new Point(5,180));
-        p3=new outputPin(this,1,new Point(180,90));
+        inputPin p1=new inputPin(this,1,new Point(5,45));
+        inputPin p2=new inputPin(this,2,new Point(5,130));
+        p3=new outputPin(this,1,new Point(210,90));
         this.add(p1);
         this.add(p2);
         this.add(p3);

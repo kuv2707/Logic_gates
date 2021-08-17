@@ -1,11 +1,13 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
 import java.util.*;
-import javax.swing.UIManager.*;
+
 import java.io.*;
 
-class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
+class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
+{
      JFrame frame;
      JPanel pan;
      ArrayList<gates> comps = new ArrayList<>();
@@ -13,38 +15,23 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
      Pin connector = null;
      launchPad p;
      infoPanel info;
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new gui());
-    }
-    public static void main()
-    {
-        main(new String[]{});
-    }
     public void setConnector(Pin p)
     {
         connector=p;
     }
     public void run() {
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-        }
+        
         frame = new JFrame("Logic circuit visualizer");
         frame.setSize(800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
+        this.setBackground(new Color(163, 228, 215));
         frame.setJMenuBar(new guiMenu());
         pan = new canvas();
         p = new launchPad(frame,this);
         pan.add(p);
-        frame.add(new JScrollPane(pan, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
+        //frame.add(new JScrollPane(pan, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
+        frame.add(pan);
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent event) {
                 p.setLocation(new Point(0, frame.getHeight() - 200));
@@ -101,18 +88,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
         m1.add(save);
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser jf = new JFileChooser();
-                if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    File f = jf.getSelectedFile();
-                    try {
-                        FileOutputStream fos = new FileOutputStream(f);
-                        ObjectOutputStream oos = new ObjectOutputStream(fos);
-                        oos.writeObject(comps);
-                    } catch (Exception fnfe) {
-                        fnfe.printStackTrace();
-                    }
-
-                }
+                saveFile();
             }
         });
         open.addActionListener(new ActionListener() {
@@ -145,6 +121,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
                 }
                 m2.add(undo);
                 comps.clear();
+                info.showDetailsFor(null);
                 frame.repaint();
             }
         });
@@ -160,7 +137,14 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
                  * ask for confirmation and give option to save before closing
                  * maintain a flag to know if work is saved or not
                  */
-                System.exit(2);
+                Dialogue d=new Dialogue("Save circuit before closing?","Save","Discard");
+                if(d.SHOW())
+                {
+                    //saving
+                    saveFile();//ERROR here
+                }
+                System.exit(0);
+
             }
         });
         }
@@ -252,7 +236,8 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
 
     }
 
-    public void loadFile() {
+    public void loadFile()
+    {
         JFileChooser jf = new JFileChooser();
         if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File f = jf.getSelectedFile();
@@ -260,6 +245,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
                 FileInputStream fos = new FileInputStream(f);
                 ObjectInputStream oos = new ObjectInputStream(fos);
                 comps = (ArrayList<gates>) oos.readObject();
+                System.out.println(comps);
                 for (gates ggg : comps) {
                     pan.add(ggg);
                     for (Pin h : ggg.pins) {
@@ -282,49 +268,69 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener {
             }
         }
     }
+    public void saveFile()
+    {
+        JFileChooser jf = new JFileChooser();
+        if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File f = jf.getSelectedFile();
+            try {
+                FileOutputStream fos = new FileOutputStream(f);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(comps);
+            } catch (Exception fnfe) {
+                fnfe.printStackTrace();
+            }
 
+        }
+    }
      class infoPanel extends JPanel {
          gates subject = null;
-         JLabel name, location, state;
-         JTextArea children, parents;
+        Font font1=new Font("Comic Sans MS",Font.PLAIN,20);
+         Font font2=new Font("Arial",Font.PLAIN,16);
+        FontMetrics fm1=getFontMetrics(font1);
+        private infoPanel()
+        {
+            super();
+            setLocation(0,10);
+            setSize(140,160);
+            new javax.swing.Timer(200,e-> repaint());
+        }
+        @Override
+        public void paintComponent(Graphics graphics)
+        {
+            super.paintComponent(graphics);
+            Graphics2D g=(Graphics2D)graphics;
+            g.setColor(Color.cyan);
+            g.fill(new RoundRectangle2D.Double(0,0,getWidth(),getHeight(),20,20));
+            g.setColor(Color.black);
+            if(subject!=null)
+            {
+                g.setFont(font1);
+                g.drawString(subject.toString(),
+                        (getWidth() - fm1.stringWidth(subject.toString()) )/2,
+                20);
+                g.setFont(font2);
+                g.drawString(subject.getLocation().x+","+subject.getLocation().y,2,50);
+                g.drawString(subject.getState(),2,80);
+                int p=120;
+                for(Pin pf:subject.child)
+                {
+                    g.drawString(pf.toString(),2,p);
+                    p+=25;
+                }
+                for(Pin pf:subject.parent)
+                {
+                    g.drawString(pf.toString(),2,p);
+                    p+=25;
+                }
 
-        private infoPanel() {
-            setLayout(new GridLayout(0,1));
-            setLocation(0, 20);
-            setSize(150,120);
-            setBackground(Color.yellow);
-            name = new JLabel("", JLabel.CENTER);
-            location = new JLabel();
-            state = new JLabel();
-            children = new JTextArea();
-            parents = new JTextArea();
-            add(name);
-            add(location);
-            add(state);
-            add(children);
-            add(parents);
+            }
+
 
         }
 
         public  void showDetailsFor(gates g) {
-            subject = g;
-            children.setText("");
-            parents.setText("");
-            if (subject != null) {
-                name.setText(subject.toString());
-                location.setText(subject.getLocation().x + "," + subject.getLocation().y);
-                state.setText(subject.getState());
-                for (inputPin gd : subject.child) {
-                    children.append(gd.getHolder().toString() + "\n");
-                }
-                for (outputPin ge : subject.parent) {
-                    parents.append(ge.getHolder().toString() + "\n");
-                }
-            }
-            else
-            {
-                name.setText("");
-            }
+            subject=g;
         }
     }
 }

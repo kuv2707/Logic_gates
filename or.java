@@ -15,12 +15,14 @@ class or extends gates
         {
             state[i]=false;
         }
-        this.setSize(200,200);
+        this.setSize(230,200);
         this.setOpaque(true);
-        
-        inputPin p1=new inputPin(this,1,new Point(5,25));
-        inputPin p2=new inputPin(this,2,new Point(5,180));
-         p3=new outputPin(this,1,new Point(180,90));
+        chehra=Main.or;
+        chehraOffset.x=-80;
+        chehraOffset.y=-40;
+        inputPin p1=new inputPin(this,1,new Point(5,45));
+        inputPin p2=new inputPin(this,2,new Point(5,130));
+         p3=new outputPin(this,1,new Point(210,90));
         this.add(p1);
         this.add(p2);
         this.add(p3);

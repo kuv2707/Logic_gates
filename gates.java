@@ -1,22 +1,24 @@
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.Serializable;
-
 abstract class gates extends JPanel implements Serializable
 {
     protected boolean estado=false;
     JFrame holdingFrame;
     gui holdingPanel;
     Point natDrag;
-    Image img;
+
     outputPin p3;
     ArrayList<inputPin> child=new ArrayList();
     ArrayList<outputPin> parent=new ArrayList();
     Color light=new Color(45,56,82);
     ArrayList<Pin> pins=new ArrayList<Pin>();
+    BufferedImage chehra;
+    Point chehraOffset=new Point(0,0);
     public gates(Point location,JFrame frame,gui pan)
     {
         this.setLayout(null);
@@ -39,7 +41,6 @@ abstract class gates extends JPanel implements Serializable
             {
                 holdingPanel.info.showDetailsFor(este);
                 holdingFrame.repaint();
-                System.out.println("clicked");
                 stimulate();
             }
         });
@@ -65,21 +66,33 @@ abstract class gates extends JPanel implements Serializable
         });
         }
     }
+    public Image getFaceImage()
+    {
+        return chehra;
+    }
+    public Point getFaceImageLocation()
+    {
+        return chehraOffset;
+    }
+
+
     public void paintComponent(Graphics gg)
     {
         super.paintComponent(gg);
         Graphics2D g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.drawImage(getFaceImage(),getFaceImageLocation().x,getFaceImageLocation().y,this);
         g.setColor(new Color(253, 235, 208, 180));
+        if(this instanceof Switch)
         g.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         g.setColor(Color.black);
         g.drawString(getShowName(), 30, 18);
-        g.drawString("Parents: " + parent, 30, 30);
-        g.drawString("Children: " + child, 30, 40);
+        //g.drawString("Parents: " + parent, 30, 30);
+        //g.drawString("Children: " + child, 30, 40);
         Color c = estado ? Color.green : Color.red;
         g.setColor(c);
 
-        g.fill(new RoundRectangle2D.Double(5, 5, 20, 20, 10, 10));
+        g.fill(new RoundRectangle2D.Double(getWidth()-25, 5, 20, 20, 10, 10));
     }
 
     public void addRightClickThings() {
@@ -99,7 +112,8 @@ abstract class gates extends JPanel implements Serializable
                     p.remove(este);
 
                 }
-                holdingPanel.repaint();
+                holdingPanel.info.showDetailsFor(null);
+                holdingFrame.repaint();
             }
         });
         opt.add(del);
