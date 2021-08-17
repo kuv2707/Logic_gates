@@ -81,9 +81,9 @@ abstract class gates extends JPanel implements Serializable
         super.paintComponent(gg);
         Graphics2D g = (Graphics2D) gg;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.drawImage(getFaceImage(),getFaceImageLocation().x,getFaceImageLocation().y,this);
+        //g.drawImage(getFaceImage(),getFaceImageLocation().x,getFaceImageLocation().y,this);
         g.setColor(new Color(253, 235, 208, 180));
-        if(this instanceof Switch)
+        //if(this instanceof Switch)
         g.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         g.setColor(Color.black);
         g.drawString(getShowName(), 30, 18);
