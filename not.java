@@ -7,7 +7,6 @@ class not extends gates
     {
         super(p,frame,ooo);
         estado=true;
-        chehra=Main.not;
         this.setSize(80,50);
         inputPin p1=new inputPin(this,1,new Point(5,25));
          p3=new outputPin(this,1,new Point(60,25));

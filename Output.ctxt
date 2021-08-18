@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Output
+comment1.params=location\ frame\ pan
+comment1.target=Output(java.awt.Point,\ javax.swing.JFrame,\ gui)
+comment2.params=a\ b
+comment2.target=void\ setState(boolean,\ int)
+comment3.params=
+comment3.target=boolean\ minterm()
+comment4.params=
+comment4.target=java.lang.String\ getShowName()
+comment5.params=
+comment5.target=outputPin\ getOutputPin()
+comment6.params=
+comment6.target=void\ stimulate()
+numComments=7
