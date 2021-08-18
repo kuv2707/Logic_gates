@@ -17,7 +17,6 @@ class or extends gates
         }
         this.setSize(230,200);
         this.setOpaque(true);
-        chehra=Main.or;
         chehraOffset.x=-80;
         chehraOffset.y=-40;
         inputPin p1=new inputPin(this,1,new Point(5,45));

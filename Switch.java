@@ -11,7 +11,6 @@ class Switch extends gates
         this.setSize(200,60);
         
          p3=new outputPin(this,1,new Point(180,25));
-        pins.add(p3);
         this.add(p3);
         pins.add(p3);
         

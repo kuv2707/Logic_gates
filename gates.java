@@ -17,7 +17,6 @@ abstract class gates extends JPanel implements Serializable
     ArrayList<outputPin> parent=new ArrayList();
     Color light=new Color(45,56,82);
     ArrayList<Pin> pins=new ArrayList<Pin>();
-    BufferedImage chehra;
     Point chehraOffset=new Point(0,0);
     public gates(Point location,JFrame frame,gui pan)
     {
@@ -60,6 +59,7 @@ abstract class gates extends JPanel implements Serializable
         {
             public void mouseClicked(MouseEvent e)
             {
+                if(SwingUtilities.isLeftMouseButton(e))
                 setState(!estado,0);
                 //System.out.println(state);
             }
@@ -68,7 +68,13 @@ abstract class gates extends JPanel implements Serializable
     }
     public Image getFaceImage()
     {
-        return chehra;
+        if(this instanceof and)
+        return Main.and;
+        if(this instanceof or)
+        return Main.or;
+        if(this instanceof not)
+        return Main.not;
+        return null;
     }
     public Point getFaceImageLocation()
     {
@@ -96,6 +102,8 @@ abstract class gates extends JPanel implements Serializable
     }
 
     public void addRightClickThings() {
+        if(this instanceof Output)
+        return;
         JPopupMenu opt = new JPopupMenu();
         JMenuItem del = new JMenuItem("Remove this gate");
         gates este = this;
@@ -112,6 +120,8 @@ abstract class gates extends JPanel implements Serializable
                     p.remove(este);
 
                 }
+                este.child.clear();
+                este.parent.clear();
                 holdingPanel.info.showDetailsFor(null);
                 holdingFrame.repaint();
             }

@@ -30,12 +30,19 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         pan = new canvas();
         p = new launchPad(frame,this);
         pan.add(p);
+
+        Output m = new Output(new Point(500, 100),frame,this);
+        pan.add(m);
+        comps.add(m);
+        pan.repaint();
+
         //frame.add(new JScrollPane(pan, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
         frame.add(pan);
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent event) {
                 p.setLocation(new Point(0, frame.getHeight() - 200));
                 p.setSize(frame.getWidth() - 60, 100);
+                frame.repaint();
             }
         });
         info = new infoPanel();
@@ -137,13 +144,17 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
                  * ask for confirmation and give option to save before closing
                  * maintain a flag to know if work is saved or not
                  */
-                Dialogue d=new Dialogue("Save circuit before closing?","Save","Discard");
-                if(d.SHOW())
+                if(comps.size()!=0)
                 {
-                    //saving
-                    saveFile();//ERROR here
+                    Dialogue d=new Dialogue("Save circuit before closing?","Save","Discard");
+                    if(d.SHOW())
+                    {
+                        //saving
+                        saveFile();
+                    }
+                    
                 }
-                System.exit(0);
+                    System.exit(0);
 
             }
         });
@@ -273,6 +284,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         JFileChooser jf = new JFileChooser();
         if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File f = jf.getSelectedFile();
+            
             try {
                 FileOutputStream fos = new FileOutputStream(f);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);

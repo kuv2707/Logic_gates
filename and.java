@@ -10,7 +10,6 @@ class and extends gates
     public and(Point lox,JFrame frame,gui pan)
     {
         super(lox,frame,pan);
-        chehra=Main.and;
         chehraOffset.x=-70;
         chehraOffset.y=-20;
         

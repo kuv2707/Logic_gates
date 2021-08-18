@@ -7,16 +7,17 @@ public class Dialogue extends JDialog
     boolean decision;
     public Dialogue(String message,String yesOption,String noOption)
     {
-        super();
-        setSize(200,100);
+        super((Frame)null,true);
+        setSize(350,150);
+        setLocationRelativeTo(null);
         JPanel pan=new JPanel();
-
+        
         pan.setLayout(new GridLayout(2,1));
         JButton but=new JButton(yesOption);
         JButton but2=new JButton(noOption);
         JLabel lab=new JLabel(message);
         JPanel sub=new JPanel();
-        pan.setLayout(new GridLayout(1,2));
+        sub.setLayout(new GridLayout(1,2));
         sub.add(but);
         sub.add(but2);
         pan.add(lab);
