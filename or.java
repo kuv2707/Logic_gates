@@ -53,7 +53,7 @@ class or extends gates
         estado=minterm();
         try
         {
-            Thread.sleep(60);
+            Thread.sleep(LATENCY);
         }
         catch (InterruptedException ie)
         {
@@ -85,5 +85,25 @@ class or extends gates
     public String getShowName()
     {
         return "OR";
+    }
+    public String expression()
+    {
+        String s="";
+        for(int i=0;i<parent.size();i++)
+        {
+            outputPin p=parent.get(i);
+            s+=p.getHolder().expression();
+            if(i<parent.size()-1)
+            s+="+";
+        }
+        if(s.isEmpty()==false)
+        s="("+s+")";
+        return s;
+    }
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.drawString(state[0]+" "+state[1],10,50);
     }
 }

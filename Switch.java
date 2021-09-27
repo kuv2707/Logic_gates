@@ -4,6 +4,8 @@ import java.awt.event.*;
 import javax.swing.*;
 class Switch extends gates
 {
+    char lab;
+    static char labs='A';
     public Switch(Point p,JFrame frame,gui pan)
     {
         super(p,frame,pan);
@@ -13,7 +15,8 @@ class Switch extends gates
          p3=new outputPin(this,1,new Point(180,25));
         this.add(p3);
         pins.add(p3);
-        
+        lab=labs;
+        labs++;
     }
     public outputPin getOutputPin()
     {
@@ -43,7 +46,7 @@ class Switch extends gates
         holdingPanel.repaint();
         try
         {
-            Thread.sleep(60);
+            Thread.sleep(LATENCY);
         }
         catch (InterruptedException ie)
         {
@@ -66,5 +69,17 @@ class Switch extends gates
     public String getShowName()
     {
         return "SWITCH(input)";
+    }
+    
+    @Override
+    public String expression()
+    {
+                return ""+lab;
+    }
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.drawString(lab+"",10,60);
     }
 }

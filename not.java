@@ -28,7 +28,7 @@ class not extends gates
         holdingPanel.repaint();
         try
         {
-            Thread.sleep(60);
+            Thread.sleep(LATENCY);
         }
         catch (InterruptedException ie)
         {
@@ -70,5 +70,16 @@ class not extends gates
     public String getShowName()
     {
         return "NOT";
+    }
+    public String expression()
+    {
+        String s="";
+        for(outputPin p:parent)
+        {
+            s+=p.getHolder().expression();
+        }
+        if(s.isEmpty()==false)
+        s="(!"+s+")";
+        return s;
     }
 }

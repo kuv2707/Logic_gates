@@ -14,6 +14,11 @@ class Output extends gates
 
     @Override
     public void setState(boolean a, int b) {
+        
+        for(outputPin p:parent)
+        {
+            a=a||p.getHolder().estado;
+        }
         estado=a;
     }
 
@@ -36,5 +41,19 @@ class Output extends gates
     @Override
     public void stimulate() {
             //it wont take part in stimulate chain as it cant stimulate anyting else as it doesnt have output pin
+    }
+    @Override
+    public String expression()
+    {
+        String s="";
+        for(int i=0;i<parent.size();i++)
+        {
+            outputPin p=parent.get(i);
+            s+=p.getHolder().expression();
+            if(i<parent.size()-1)
+            s+="||";
+            
+        }
+        return s;
     }
 }

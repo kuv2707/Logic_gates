@@ -16,4 +16,6 @@ comment7.params=
 comment7.target=boolean\ minterm()
 comment8.params=
 comment8.target=java.lang.String\ getShowName()
-numComments=9
+comment9.params=
+comment9.target=java.lang.String\ expression()
+numComments=10

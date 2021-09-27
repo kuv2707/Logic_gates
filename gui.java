@@ -15,6 +15,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
      Pin connector = null;
      launchPad p;
      infoPanel info;
+     String minterm="";
     public void setConnector(Pin p)
     {
         connector=p;
@@ -36,12 +37,13 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         comps.add(m);
         pan.repaint();
 
-        //frame.add(new JScrollPane(pan, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
-        frame.add(pan);
+        frame.add(new JScrollPane(pan, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
+        //frame.add(pan);
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent event) {
                 p.setLocation(new Point(0, frame.getHeight() - 200));
                 p.setSize(frame.getWidth() - 60, 100);
+                setSize(frame.getWidth(),frame.getHeight());
                 frame.repaint();
             }
         });
@@ -122,6 +124,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         cls.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 backup.clear();
+                Switch.labs='A';
                 for (gates g : comps) {
                     pan.remove(g);
                     backup.add(g);
@@ -304,7 +307,7 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         {
             super();
             setLocation(0,10);
-            setSize(140,160);
+            setSize(140,450);
             new javax.swing.Timer(200,e-> repaint());
         }
         @Override
@@ -335,9 +338,9 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
                     g.drawString(pf.toString(),2,p);
                     p+=25;
                 }
-
+                
             }
-
+            g.drawString(minterm,2,300);
 
         }
 

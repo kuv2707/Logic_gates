@@ -7,6 +7,8 @@ import java.awt.geom.*;
 import java.io.Serializable;
 abstract class gates extends JPanel implements Serializable
 {
+    final int LATENCY=25;
+    
     protected boolean estado=false;
     JFrame holdingFrame;
     gui holdingPanel;
@@ -25,6 +27,7 @@ abstract class gates extends JPanel implements Serializable
         holdingPanel=pan;
         this.setLocation(location);
         this.addListeners();
+        new javax.swing.Timer(50,e ->  repaint()).start();
     }
     public void addListeners()
     {
@@ -95,15 +98,15 @@ abstract class gates extends JPanel implements Serializable
         g.drawString(getShowName(), 30, 18);
         //g.drawString("Parents: " + parent, 30, 30);
         //g.drawString("Children: " + child, 30, 40);
-        Color c = estado ? Color.green : Color.red;
+        Color c = estado ? new Color(19, 141, 117) : new Color(192, 57, 43);
         g.setColor(c);
-
+        g.drawString(expression(),20,30);
+        c=c.brighter().brighter();
         g.fill(new RoundRectangle2D.Double(getWidth()-25, 5, 20, 20, 10, 10));
     }
 
     public void addRightClickThings() {
-        if(this instanceof Output)
-        return;
+        
         JPopupMenu opt = new JPopupMenu();
         JMenuItem del = new JMenuItem("Remove this gate");
         gates este = this;
@@ -127,6 +130,22 @@ abstract class gates extends JPanel implements Serializable
             }
         });
         opt.add(del);
+        if(this instanceof Output)
+        {
+            JMenuItem ex = new JMenuItem("Get expression");
+            ex.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent e)
+                {
+                    String exp=expression();
+                    System.out.println(exp);
+                    holdingPanel.minterm=exp;
+                    holdingPanel.info.repaint();
+                }
+            });
+            opt.add(ex);
+        }
+        
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent me) {
                 if (SwingUtilities.isRightMouseButton(me)) {
@@ -157,4 +176,5 @@ abstract class gates extends JPanel implements Serializable
      * start on its own, so this method will do that
      */
     abstract public void stimulate();
+    abstract public String expression();
 }

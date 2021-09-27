@@ -16,6 +16,7 @@ abstract class Pin extends JButton implements Serializable
     
     int no;
     Point locationOfWire;
+    ArrayList<Pin> partners=new ArrayList();
     public Pin(gates holder,int no,Point locatio)
     {
         this.holder=holder;
@@ -39,6 +40,7 @@ abstract class Pin extends JButton implements Serializable
                         if(este instanceof inputPin)
                         {
                             getHolder().holdingPanel.connector.addChild((inputPin)este);
+                            partners.add((inputPin)este);//this pin has reference of the parent of its holder which is connected to it
                             getHolder().holdingFrame.repaint();
                             getHolder().holdingPanel.connector=null;
                         }

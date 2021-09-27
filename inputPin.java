@@ -8,12 +8,13 @@ class inputPin extends Pin
     }
     public void setState(boolean b)
     {
-        for(Pin p:getHolder().parent)
+        //BUG
+        for(Pin p:partners)
         {
-            b=b||p.getHolder().estado;
+            //b=b||p.getHolder().estado;
         }
         getHolder().setState(b,no);
-        this.setText(""+b);
+        //this.setText(""+b);
     }
     public void remove(outputPin p)
     {
