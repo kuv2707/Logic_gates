@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import javax.imageio.ImageIO;
+
 
 class Output extends gates {
     public Output(Point p, JFrame frame, gui ooo)// Output can only have 1 inputpin

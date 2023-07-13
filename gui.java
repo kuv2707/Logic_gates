@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.util.*;
 import javax.swing.UIManager.*;
-import java.io.*;
 
 class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener {
     JFrame frame;
@@ -77,20 +76,19 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                 outputPin out = ga.getOutputPin();
                 for (inputPin chi : ga.child) {
                     Point start = ga.getLocation();
-                    start.x += out.getLocation().x + out.getWidth() /1;
+                    start.x += out.getLocation().x + out.getWidth() / 1;
                     start.y += out.getLocation().y + out.getHeight() / 2;
                     Point end = chi.getHolder().getLocation();
                     end.x += chi.getLocation().x + chi.getWidth() / 2;
                     end.y += chi.getLocation().y + chi.getHeight() / 2;
 
-
-                    //de Casteljau's algorithm for drawing bezier curves
-                    //todo bernstein polynomial form
+                    // de Casteljau's algorithm for drawing bezier curves
+                    // todo bernstein polynomial form
                     PointHD first = new PointHD(start.x, start.y);
                     PointHD second = new PointHD(end.x, end.y);
                     PointHD first_d = new PointHD(start.x + out.weight, start.y);
                     PointHD second_d = new PointHD(end.x - chi.weight, end.y);
-                    PointHD prev=first;
+                    PointHD prev = first;
                     for (float i = 0; i < 1; i += 1 / Math.max(dist(first, second), dist(first_d, second_d))) {
                         PointHD p11 = sectF(first, first_d, i);
                         PointHD p12 = sectF(first_d, second_d, i);
@@ -98,8 +96,8 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                         PointHD p21 = sectF(p11, p12, i);
                         PointHD p22 = sectF(p12, p13, i);
                         PointHD p3 = sectF(p21, p22, i);
-                        g.drawLine((int)prev.x,(int)prev.y,(int)p3.x,(int)p3.y);
-                        prev=p3;
+                        g.drawLine((int) prev.x, (int) prev.y, (int) p3.x, (int) p3.y);
+                        prev = p3;
                     }
 
                 }
@@ -134,17 +132,6 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
             m1.add(open);
             JMenuItem save = new JMenuItem("Save file");
             m1.add(save);
-            save.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    saveFile();
-                }
-            });
-            open.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent edfdfs) {
-                    loadFile();
-
-                }
-            });
             JMenu m2 = new JMenu("Options");
             JMenuItem cls = new JMenuItem("Clear screen");
             m2.add(cls);
@@ -177,21 +164,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
             mb.add(m2);
             JMenuItem exit = new JMenuItem("Exit");
             m1.add(exit);
-            exit.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    /**
-                     * ask for confirmation and give option to save before closing
-                     * maintain a flag to know if work is saved or not
-                     */
-                    Dialogue d = new Dialogue("Save circuit before closing?", "Save", "Discard");
-                    if (d.SHOW()) {
-                        // saving
-                        saveFile();// ERROR here
-                    }
-                    System.exit(0);
 
-                }
-            });
         }
     }
 
@@ -275,8 +248,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
             });
 
             this.add(switchadd);
-            
-            
+
             JButton outputadd = new JButton("Add OUTPUT");
             outputadd.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {
@@ -288,56 +260,9 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
             });
 
             this.add(outputadd);
-            
-        }
-
-    }
-
-    public void loadFile() {
-        JFileChooser jf = new JFileChooser();
-        if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File f = jf.getSelectedFile();
-            try {
-                FileInputStream fos = new FileInputStream(f);
-                ObjectInputStream oos = new ObjectInputStream(fos);
-                comps = (ArrayList<gates>) oos.readObject();
-                System.out.println(comps);
-                for (gates ggg : comps) {
-                    pan.add(ggg);
-                    for (Pin h : ggg.pins) {
-                        try {
-                            h.addListeners();
-                        } catch (Exception e) {
-                            System.out.println(e);
-                        }
-
-                    }
-                    ggg.addListeners();
-                }
-                for (gates d : comps) {
-                    d.stimulate();
-                }
-
-                frame.repaint();
-            } catch (Exception fnfe) {
-                fnfe.printStackTrace();
-            }
-        }
-    }
-
-    public void saveFile() {
-        JFileChooser jf = new JFileChooser();
-        if (jf.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File f = jf.getSelectedFile();
-            try {
-                FileOutputStream fos = new FileOutputStream(f);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(comps);
-            } catch (Exception fnfe) {
-                fnfe.printStackTrace();
-            }
 
         }
+
     }
 
     class infoPanel extends JPanel {
@@ -374,7 +299,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                     p += 25;
                 }
                 for (Pin pf : subject.parent) {
-                    g.drawString("p "+pf.toString(), 2, p);
+                    g.drawString("p " + pf.toString(), 2, p);
                     p += 25;
                 }
 

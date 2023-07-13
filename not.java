@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import javax.imageio.ImageIO;
 
 class not extends gates {
     public not(Point p, JFrame frame, gui ooo)// not can only have 1 inputpin

@@ -12,7 +12,6 @@ public class outputPin extends Pin {
     }
 
     public void remove(gates g) {
-        int i = 0;
         for (Pin p : g.pins) {
             if (p instanceof inputPin) {
                 getHolder().child.remove(p);

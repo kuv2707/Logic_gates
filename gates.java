@@ -4,17 +4,16 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.Serializable;
 
-abstract class gates extends JPanel implements Serializable {
+abstract class gates extends JPanel  {
     protected boolean estado = false;
     JFrame holdingFrame;
     gui holdingPanel;
     Point natDrag;
 
     outputPin p3;
-    ArrayList<inputPin> child = new ArrayList();
-    ArrayList<outputPin> parent = new ArrayList();
+    ArrayList<inputPin> child = new ArrayList<>();
+    ArrayList<outputPin> parent = new ArrayList<>();
     Color light = new Color(45, 56, 82);
     ArrayList<Pin> pins = new ArrayList<Pin>();
     BufferedImage chehra;

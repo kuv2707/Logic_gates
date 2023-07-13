@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
-import javax.imageio.ImageIO;
 
 class or extends gates {
     ArrayList<gates> parents;

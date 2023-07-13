@@ -1,14 +1,13 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.Serializable;
 
 /**
  * EXTEND THIS CLASS INTO INPUT AND OUTPUT PIN
  * AND OUTPIN CANNOT BE A CHILD
  * OUTPUT PIN KE THORUGH USKE HOLDER KA STATE CANT BE CHANGED
  */
-abstract class Pin extends JButton implements Serializable {
+abstract class Pin extends JButton {
     gates holder;
 
     int no;
