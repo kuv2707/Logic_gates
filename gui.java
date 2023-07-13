@@ -11,11 +11,11 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
     JPanel pan;
     ArrayList<gates> comps = new ArrayList<>();
     ArrayList<gates> backup = new ArrayList<>();
-    Pin connector = null;
+    outputPin connector = null;
     launchPad p;
     infoPanel info;
 
-    public void setConnector(Pin p) {
+    public void setConnector(outputPin p) {
         connector = p;
     }
 
@@ -330,7 +330,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
         private infoPanel() {
             super();
             setLocation(0, 10);
-            setSize(140, 160);
+            setSize(140, 360);
             new javax.swing.Timer(200, e -> repaint());
         }
 
@@ -355,7 +355,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                     p += 25;
                 }
                 for (Pin pf : subject.parent) {
-                    g.drawString(pf.toString(), 2, p);
+                    g.drawString("p "+pf.toString(), 2, p);
                     p += 25;
                 }
 

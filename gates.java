@@ -101,6 +101,7 @@ abstract class gates extends JPanel implements Serializable {
                     p.remove(getOutputPin());
                 }
                 for (outputPin p : parent) {
+                    System.out.println("remove called "+p.toString());
                     p.remove(este);
 
                 }

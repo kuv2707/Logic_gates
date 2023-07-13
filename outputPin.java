@@ -16,7 +16,7 @@ public class outputPin extends Pin {
         for (Pin p : g.pins) {
             if (p instanceof inputPin) {
                 getHolder().child.remove(p);
-                return;// for all inputpins p in g, p will be removed from this gate's children, but p
+                // return;// for all inputpins p in g, p will be removed from this gate's children, but p
                        // can only be removed once,other iterations are redundant
             }
         }

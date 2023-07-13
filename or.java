@@ -1,5 +1,8 @@
 import java.util.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import javax.imageio.ImageIO;
 
@@ -28,6 +31,13 @@ class or extends gates {
         pins.add(p1);
         pins.add(p2);
         pins.add(p3);
+        addMouseListener(new MouseAdapter()
+        {
+            public void mouseClicked(MouseEvent me)
+            {
+                System.out.println(p1.toString()+" "+p2.toString());
+            }
+        });
     }
 
     public outputPin getOutputPin() {
@@ -65,8 +75,8 @@ class or extends gates {
     }
 
     public boolean minterm() {
-        boolean r = state[0];
-        for (int i = 1; i < ipins; i++) {
+        boolean r = false;
+        for (int i = 0; i < ipins; i++) {
             r = (r) || (state[i]);// wont work for more than 2 pins
 
         }

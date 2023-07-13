@@ -39,6 +39,9 @@ class and extends gates {
 
     public void setState(boolean etate, int pin) {
         state[pin - 1] = etate;
+        for(int i=0;i<state.length;i++)
+        System.out.print(state[i]+"|");
+        System.out.println();
         estado = minterm();
         holdingPanel.repaint();
         // System.out.println(" state of and gate "+estado+" what was received:
