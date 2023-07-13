@@ -24,7 +24,7 @@ class and extends gates {
 
         inputPin p1 = new inputPin(this, 1, new Point(5, 45));
         inputPin p2 = new inputPin(this, 2, new Point(5, 130));
-        p3 = new outputPin(this, 1, new Point(210, 90));
+        p3 = new outputPin(this, 1, new Point(170, 90));
         this.add(p1);
         this.add(p2);
         this.add(p3);
@@ -39,9 +39,9 @@ class and extends gates {
 
     public void setState(boolean etate, int pin) {
         state[pin - 1] = etate;
-        for(int i=0;i<state.length;i++)
-        System.out.print(state[i]+"|");
-        System.out.println();
+        // for(int i=0;i<state.length;i++)
+        // System.out.print(state[i]+"|");
+        // System.out.println();
         estado = minterm();
         holdingPanel.repaint();
         // System.out.println(" state of and gate "+estado+" what was received:

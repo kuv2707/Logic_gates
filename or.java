@@ -24,7 +24,7 @@ class or extends gates {
         chehraOffset.y = -40;
         inputPin p1 = new inputPin(this, 1, new Point(5, 45));
         inputPin p2 = new inputPin(this, 2, new Point(5, 130));
-        p3 = new outputPin(this, 1, new Point(210, 90));
+        p3 = new outputPin(this, 1, new Point(170, 90));
         this.add(p1);
         this.add(p2);
         this.add(p3);

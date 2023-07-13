@@ -2,20 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import javax.imageio.ImageIO;
 
-class not extends gates {
-    public not(Point p, JFrame frame, gui ooo)// not can only have 1 inputpin
+class Output extends gates {
+    public Output(Point p, JFrame frame, gui ooo)// Output can only have 1 inputpin
     {
         super(p, frame, ooo);
-        estado = true;
+        estado = false;
         // chehra=Main.not;
         this.setSize(180, 60);
         inputPin p1 = new inputPin(this, 1, new Point(5, 25));
-        p3 = new outputPin(this, 1, new Point(120, 30));
         this.add(p1);
-        this.add(p3);
         pins.add(p1);
-        pins.add(p3);
-
+        
     }
 
     public outputPin getOutputPin() {
@@ -24,7 +21,7 @@ class not extends gates {
 
     public void setState(boolean etate, int pin) {
 
-        estado = !etate;
+        estado = etate;
 
         holdingPanel.repaint();
         try {
@@ -61,6 +58,6 @@ class not extends gates {
     }
 
     public String getShowName() {
-        return "NOT";
+        return "OUTPUT";
     }
 }

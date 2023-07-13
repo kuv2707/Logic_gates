@@ -77,7 +77,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                 outputPin out = ga.getOutputPin();
                 for (inputPin chi : ga.child) {
                     Point start = ga.getLocation();
-                    start.x += out.getLocation().x + out.getWidth() / 2;
+                    start.x += out.getLocation().x + out.getWidth() /1;
                     start.y += out.getLocation().y + out.getHeight() / 2;
                     Point end = chi.getHolder().getLocation();
                     end.x += chi.getLocation().x + chi.getWidth() / 2;
@@ -87,6 +87,7 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                     PointHD second = new PointHD(end.x, end.y);
                     PointHD first_d = new PointHD(start.x + out.weight, start.y);
                     PointHD second_d = new PointHD(end.x - chi.weight, end.y);
+                    PointHD prev=first;
                     for (float i = 0; i < 1; i += 1 / Math.max(dist(first, second), dist(first_d, second_d))) {
                         PointHD p11 = sectF(first, first_d, i);
                         PointHD p12 = sectF(first_d, second_d, i);
@@ -94,7 +95,8 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                         PointHD p21 = sectF(p11, p12, i);
                         PointHD p22 = sectF(p12, p13, i);
                         PointHD p3 = sectF(p21, p22, i);
-                        g.fillRect((int) p3.x, (int) p3.y, 2, 2);
+                        g.drawLine((int)prev.x,(int)prev.y,(int)p3.x,(int)p3.y);
+                        prev=p3;
                     }
 
                 }
@@ -270,6 +272,20 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
             });
 
             this.add(switchadd);
+            
+            
+            JButton outputadd = new JButton("Add OUTPUT");
+            outputadd.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent me) {
+                    Output m = new Output(new Point(500, 100), frame, ggg);
+                    pan.add(m);
+                    comps.add(m);
+                    pan.repaint();
+                }
+            });
+
+            this.add(outputadd);
+            
         }
 
     }

@@ -17,7 +17,7 @@ abstract class Pin extends JButton implements Serializable {
 
     public Pin(gates holder, int no, Point locatio) {
         this.holder = holder;
-        this.setSize(80, 20);
+        this.setSize(55, 20);
         this.no = no;
         this.locationOfWire = locatio;
         this.setLocation(locatio);

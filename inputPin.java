@@ -11,7 +11,7 @@ class inputPin extends Pin {
         for (outputPin p : parentPins) {
             b = b || p.getHolder().estado;
         }
-        System.out.println(b);
+        // System.out.println(b);
         getHolder().setState(b, no);
         this.setText("" + b);
     }
