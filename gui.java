@@ -76,10 +76,8 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
                 outputPin out = ga.getOutputPin();
                 for (inputPin chi : ga.child) {
                     Point start = ga.getLocation();
-                    System.out.println(start);
                     start.x += out.getLocation().x+out.getWidth()/2;
                     start.y += out.getLocation().y+out.getHeight()/2;
-                    System.out.println(start);
                     Point end = chi.getHolder().getLocation();
                     end.x += chi.getLocation().x+chi.getWidth()/2;
                     end.y += chi.getLocation().y+chi.getHeight()/2;
@@ -87,9 +85,9 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
                     
                     PointHD first=new PointHD(start.x,start.y);
                     PointHD second=new PointHD(end.x,end.y);
-                    PointHD first_d=new PointHD(start.x+200,start.y);
-                    PointHD second_d=new PointHD(end.x-200,end.y);
-                    for(float i=0;i<1;i+=1/dist(first,second))
+                    PointHD first_d=new PointHD(start.x+out.weight,start.y);
+                    PointHD second_d=new PointHD(end.x-chi.weight,end.y);
+                    for(float i=0;i<1;i+=1/Math.max(dist(first,second),dist(first_d,second_d)))
                     {
                         PointHD p11=sectF(first,first_d,i);
                         PointHD p12=sectF(first_d,second_d,i);
