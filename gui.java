@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.util.*;
-
+import javax.swing.UIManager.*;
 import java.io.*;
 
 class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
@@ -24,6 +24,20 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
         frame = new JFrame("Logic circuit visualizer");
         frame.setSize(800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+            
+        }
 
         this.setBackground(new Color(163, 228, 215));
         frame.setJMenuBar(new guiMenu());
@@ -62,17 +76,55 @@ class gui extends JPanel implements Runnable,MouseListener,MouseMotionListener
                 outputPin out = ga.getOutputPin();
                 for (inputPin chi : ga.child) {
                     Point start = ga.getLocation();
-                    start.x += out.getLocation().x;
-                    start.y += out.getLocation().y;
+                    System.out.println(start);
+                    start.x += out.getLocation().x+out.getWidth()/2;
+                    start.y += out.getLocation().y+out.getHeight()/2;
+                    System.out.println(start);
                     Point end = chi.getHolder().getLocation();
-                    end.x += chi.getLocation().x;
-                    end.y += chi.getLocation().y;
-                    g.drawLine(start.x, start.y, end.x, end.y);
+                    end.x += chi.getLocation().x+chi.getWidth()/2;
+                    end.y += chi.getLocation().y+chi.getHeight()/2;
+                    
+                    
+                    PointHD first=new PointHD(start.x,start.y);
+                    PointHD second=new PointHD(end.x,end.y);
+                    PointHD first_d=new PointHD(start.x+200,start.y);
+                    PointHD second_d=new PointHD(end.x-200,end.y);
+                    for(float i=0;i<1;i+=1/dist(first,second))
+                    {
+                        PointHD p11=sectF(first,first_d,i);
+                        PointHD p12=sectF(first_d,second_d,i);
+                        PointHD p13=sectF(second_d,second,i);
+                        PointHD p21=sectF(p11,p12,i);
+                        PointHD p22=sectF(p12,p13,i);
+                        PointHD p3=sectF(p21,p22,i);
+                        g.fillRect((int)p3.x,(int)p3.y,2,2);
+                    }
+                    
+                    // g.drawLine(start.x, start.y, end.x, end.y);
+                    
                     //g.drawString(out.toString(),start.x,start.y);
                     //g.drawString(chi.toString(),end.x,end.y);
                     //g.drawString("Main gate of this wire: "+ga,(start.x+end.x)/2,(start.y+end.y)/2);
                 }
             }
+        }
+        public double dist(PointHD a,PointHD b)
+        {
+            return Math.sqrt(Math.pow(a.x-b.x,2)+Math.pow(a.y-b.y,2));
+        }
+        public PointHD sectF(PointHD pi,PointHD pf,float i)
+        {
+            return new PointHD(pi.x+i*(pf.x-pi.x),pi.y+(pf.y-pi.y)*i);
+        }
+    }
+    class PointHD
+    {
+        double x;
+        double y;
+        public PointHD(double x,double y)
+        {
+            this.x=x;
+            this.y=y;
         }
     }
     class guiMenu extends JMenuBar

@@ -86,13 +86,14 @@ abstract class gates extends JPanel implements Serializable
         //if(this instanceof Switch)
         g.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         g.setColor(Color.black);
-        g.drawString(getShowName(), 30, 18);
+        g.draw(new RoundRectangle2D.Double(0+5, 0+5, getWidth()-10, getHeight()-10, 10, 10));
+        g.drawString(getShowName(), 20, 18);
         //g.drawString("Parents: " + parent, 30, 30);
         //g.drawString("Children: " + child, 30, 40);
         Color c = estado ? Color.green : Color.red;
         g.setColor(c);
 
-        g.fill(new RoundRectangle2D.Double(getWidth()-25, 5, 20, 20, 10, 10));
+        g.fill(new RoundRectangle2D.Double(getWidth()-30, 10, 20, 20, 10, 10));
     }
 
     public void addRightClickThings() {
