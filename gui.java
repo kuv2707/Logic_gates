@@ -83,6 +83,9 @@ class gui extends JPanel implements Runnable, MouseListener, MouseMotionListener
                     end.x += chi.getLocation().x + chi.getWidth() / 2;
                     end.y += chi.getLocation().y + chi.getHeight() / 2;
 
+
+                    //de Casteljau's algorithm for drawing bezier curves
+                    //todo bernstein polynomial form
                     PointHD first = new PointHD(start.x, start.y);
                     PointHD second = new PointHD(end.x, end.y);
                     PointHD first_d = new PointHD(start.x + out.weight, start.y);
