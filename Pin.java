@@ -49,9 +49,8 @@ abstract class Pin extends JButton implements Serializable {
             public void mouseWheelMoved(MouseWheelEvent e) {
                 // Perform actions when the mouse wheel is scrolled
                 int notches = e.getWheelRotation();
-                este.weight+=notches*2.5;
+                este.weight += notches * 2.5;
                 getHolder().holdingFrame.repaint();
-                System.out.println("Mouse wheel scrolled " + notches + " notch(es)");
             }
         });
     }
